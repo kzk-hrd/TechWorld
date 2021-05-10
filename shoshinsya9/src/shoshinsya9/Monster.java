@@ -68,9 +68,6 @@ public class Monster {
 		System.out.println(this.at + "のダメージ");
 		ma.setHp(ma.getHp() - this.at);
 		System.out.println();
-		if(ma.getHp() <= 0) {
-			System.out.println(ma.getName() + "のhpは0以下になりました、負けです。");
-		}
 
 	}
 

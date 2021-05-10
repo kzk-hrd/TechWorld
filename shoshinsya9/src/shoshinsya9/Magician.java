@@ -1,5 +1,7 @@
 package shoshinsya9;
 
+import java.util.List;
+
 public class Magician {
 
 	// フィールド
@@ -78,7 +80,7 @@ public class Magician {
 		System.out.println();
 	}
 
-	public void magicAttack(Monster m, Monster m2) {
+	public void magicAttack(List<Monster> monsterList) {
 		// MP消費変数
 		int calMp = 20;
 		int magicAt = 20;
@@ -87,31 +89,25 @@ public class Magician {
 
 		if(this.mp < calMp) {
 			System.out.println("MPが不足しているため" + this.name + "は魔法攻撃を使用できません。");
+			healMagic();
 			System.out.println();
 		} else {
 			this.mp = this.mp - calMp;
-			m.setHp(m.getHp() - magicAt);
-			m2.setHp(m2.getHp() - magicAt);
-			System.out.println("敵に" + magicAt + "のダメージを与えた");
-			System.out.println();
+			for(Monster monster : monsterList) {
+				monster.setHp(monster.getHp() - magicAt);
+				System.out.println(monster.getName() + "に" + magicAt + "のダメージを与えた");
+				System.out.println();
+			}
 		}
-
-		if(m.getHp() <= 0) {
-			System.out.println(m.getName() + "のhpは0以下になりました、負けです。");
-		}
-
 	}
 
 	public void healMagic() {
-
-		System.out.println("魔法使いが回復した");
+		System.out.println( this.name+"が回復した");
 		this.hp = this.hp + 10;
 		this.mp = this.mp + 20;
 		System.out.println("hpが10回復し、" + this.hp + "になった");
 		System.out.println("mpが20回復し、" + this.mp + "になった");
 		System.out.println();
 	}
-
-
 
 }
