@@ -111,11 +111,9 @@ public class Story {
 
 		int count = 1;							                // ターン数格納変数
 		boolean judgeHeroDead = false;				// hのhp判定
-		boolean judgeMonsterDead = false;			// mのhp判定
-		boolean judgeMonster2Dead = false;        // m2のhp判定
 		boolean judgeMagicianDead = false;         // Maのhp判定
 
-		// モンスター格納用リスト
+		// Monster格納用リスト
 		List<Monster> monsterList = new ArrayList<Monster>();
 
 		/*
@@ -124,90 +122,49 @@ public class Story {
 		 */
 		while((h.getHp() > 0 || ma.getHp() > 0) && (m.getHp() > 0 || m2.getHp() > 0)) {
 
+			// Monster生存リスト作成
+			if(m.getHp() > 0 && m2.getHp() > 0) {
+				monsterList.add(m);
+				monsterList.add(m2);
+			} else if(m.getHp() > 0 && m2.getHp() <= 0) {
+				monsterList.add(m);
+			} else if(m.getHp() <= 0 && m2.getHp() > 0) {
+				monsterList.add(m2);
+			}
+
 			System.out.println("========" + count + "ターン目==========");
-			// hの攻撃(HPが0でない場合のみ攻撃できる)
+
+			// Heroの攻撃
 			if(!judgeHeroDead) {
-				if(!judgeMonsterDead) {
-					h.attack(m);
-					if(m.getHp() <= 0) {
-						System.out.println(m.getName() + "のHPが0になりました。");
-						judgeMonsterDead = true;
-					}
-				} else if(!judgeMonster2Dead) {
-					h.attack(m2);
-					if(m2.getHp() <= 0) {
-						System.out.println(m2.getName() + "のHPが0になりました。");
-						judgeMonster2Dead = true;
-					}
+				Monster monster = monsterList.get(0);
+				h.attack(monster);
+				if(monster.getHp() <= 0) {
+					System.out.println(monster.getName() + "のHPが0になりました。");
+					monsterList.remove(0);
 				}
 			}
 
-			// m, m2の攻撃(HPが0でない場合のみ攻撃できる)
-			if(!judgeMonsterDead) {
+			// Monsterの攻撃
+			for(int i=0; i<monsterList.size(); i++) {
+				Monster monsterAt = monsterList.get(i);
 				if(!judgeHeroDead) {
-					m.attackHero(h);
+					monsterAt.attackHero(h);
 					if(h.getHp() <= 0) {
 						System.out.println(h.getName() + "のHPが0になりました。");
 						judgeHeroDead = true;
 					}
 				} else if(!judgeMagicianDead) {
-					m.attackMagician(ma);
+					monsterAt.attackMagician(ma);
 					if(ma.getHp() <= 0) {
-						System.out.println(ma.getName() + "のHPが0になりました。");
+						System.out.println(ma.getHp() + "のHPが0になりました。");
 						judgeMagicianDead = true;
 					}
 				}
 			}
 
-			if(!judgeMonster2Dead) {
-				if(!judgeHeroDead) {
-					m2.attackHero(h);
-					if(h.getHp() <= 0) {
-						System.out.println(h.getName() + "のHPが0になりました。");
-						judgeHeroDead = true;
-					}
-				} else if(!judgeMagicianDead) {
-					m2.attackMagician(ma);
-					if(ma.getHp() <= 0) {
-						System.out.println(ma.getName() + "のHPが0になりました。");
-						judgeMagicianDead = true;
-					}
-				}
-			}
-
-
-			// maの攻撃
+			// Magicianの攻撃
 			if(!judgeMagicianDead) {
-				if(!judgeMonsterDead && !judgeMonster2Dead) {
-					monsterList.add(m);
-					monsterList.add(m2);
-					ma.magicAttack(monsterList);
-					for(int i=0; i < monsterList.size(); i++) {
-						if(i == 0 && monsterList.get(i).getHp() <=0) {
-							System.out.println(m.getName() + "のHPが0になりました。");
-							judgeMonsterDead = true;
-						} else if(i == 1 && monsterList.get(i).getHp() <=0) {
-							System.out.println(m2.getName() + "のHPが0になりました。");
-							judgeMonster2Dead = true;
-						}
-					}
-				} else if (!judgeMonsterDead && judgeMonster2Dead) {
-					monsterList.add(m);
-					ma.magicAttack(monsterList);
-					if(monsterList.get(0).getHp() <= 0) {
-						System.out.println(m.getName() + "のHPが0になりました。");
-						judgeMonsterDead = true;
-					}
-				} else if(judgeMonsterDead && !judgeMonster2Dead) {
-					monsterList.add(m2);
-					ma.magicAttack(monsterList);
-					if(monsterList.get(0).getHp() <= 0) {
-						System.out.println(m2.getName() + "のHPが0になりました。");
-						judgeMonster2Dead = true;
-					}
-				}
-
-				monsterList.clear();
+				ma.magicAttack(monsterList);
 			}
 
 			System.out.println();
@@ -217,6 +174,9 @@ public class Story {
 			System.out.println(ma.getName() + "の残りHP" + ma.getHp());
 
 			count++;
+
+			// ターン終了時にはモンスターリストをクリアする
+			monsterList.clear();
 		}
 
 		// 勝敗判定
