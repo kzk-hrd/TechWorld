@@ -115,22 +115,14 @@ public class Story {
 
 		// Monster格納用リスト
 		List<Monster> monsterList = new ArrayList<Monster>();
+		monsterList.add(m);
+		monsterList.add(m2);
 
 		/*
 		 * ストーリー
 		 *
 		 */
 		while((h.getHp() > 0 || ma.getHp() > 0) && (m.getHp() > 0 || m2.getHp() > 0)) {
-
-			// Monster生存リスト作成
-			if(m.getHp() > 0 && m2.getHp() > 0) {
-				monsterList.add(m);
-				monsterList.add(m2);
-			} else if(m.getHp() > 0 && m2.getHp() <= 0) {
-				monsterList.add(m);
-			} else if(m.getHp() <= 0 && m2.getHp() > 0) {
-				monsterList.add(m2);
-			}
 
 			System.out.println("========" + count + "ターン目==========");
 
@@ -174,9 +166,6 @@ public class Story {
 			System.out.println(ma.getName() + "の残りHP" + ma.getHp());
 
 			count++;
-
-			// ターン終了時にはモンスターリストをクリアする
-			monsterList.clear();
 		}
 
 		// 勝敗判定
