@@ -17,6 +17,9 @@ public class SuperHero extends Hero {
 				System.out.println(m.getName() + "のHPが0になりました。");
 				monster.remove(0);
 			}
+			if(monster.isEmpty()) {
+				break;
+			}
 		}
 	}
 
