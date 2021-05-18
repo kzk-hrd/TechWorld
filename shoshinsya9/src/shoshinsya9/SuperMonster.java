@@ -2,7 +2,7 @@ package shoshinsya9;
 
 public class SuperMonster extends Monster {
 
-	private static int numOfPoisonAttack = 3;
+	private static int numOfPoisonAttack = 5;
 
 	// オーバーライド
 	public void attackHero(Hero h) {
@@ -11,7 +11,7 @@ public class SuperMonster extends Monster {
 		h.setHp(h.getHp() - super.getAt());
 		System.out.println();
 
-		if(numOfPoisonAttack > 0) {
+		if(numOfPoisonAttack > 0 && h.getHp() > 0) {
 			System.out.println("毒による追加攻撃");
 			System.out.println(h.getName() + "に" + super.getAt() + "のダメージを与えた！");
 			h.setHp(h.getHp() - super.getAt());

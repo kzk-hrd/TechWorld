@@ -128,12 +128,7 @@ public class Story10_3 {
 
 			// SuperHeroの攻撃
 			if(!judgeHeroDead) {
-				Monster monster = monsterList.get(0);
-				sh.attack(monster);
-				if(monster.getHp() <= 0) {
-					System.out.println(monster.getName() + "のHPが0になりました。");
-					monsterList.remove(0);
-				}
+				sh.attack(monsterList);
 			}
 			if(monsterList.isEmpty()) {
 				break;
