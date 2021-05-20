@@ -139,13 +139,13 @@ public class Story10_3 {
 			for(int i=0; i<monsterList.size(); i++) {
 				Monster monsterAt = monsterList.get(i);
 				if(!judgeHeroDead) {
-					monsterAt.attackHero(sh);
+					monsterAt.attackHero(sh, sma);
 					if(sh.getHp() <= 0) {
 						System.out.println(sh.getName() + "のHPが0になりました。");
 						judgeHeroDead = true;
 					}
 				} else if(!judgeMagicianDead) {
-					monsterAt.attackMagician(sma);
+					monsterAt.attackMagician(sma, sh);
 					if(sma.getHp() <= 0) {
 						System.out.println(sma.getHp() + "のHPが0になりました。");
 						judgeMagicianDead = true;

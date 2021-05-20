@@ -56,14 +56,14 @@ public class Monster {
 
 	}
 
-	void attackHero(Hero h) {
+	void attackHero(Hero h, Magician ma) {
 		System.out.println(this.name + "の" + h.getName() + "への攻撃！");
 		System.out.println(h.getName() + "に" + this.at + "のダメージを与えた！");
 		h.setHp(h.getHp() - this.at);
 		System.out.println();
 	}
 
-	void attackMagician(Magician ma) {
+	void attackMagician(Magician ma, Hero h) {
 		System.out.println(this.name + "の" + ma.getName() + "への攻撃！");
 		System.out.println(this.at + "のダメージ");
 		ma.setHp(ma.getHp() - this.at);
