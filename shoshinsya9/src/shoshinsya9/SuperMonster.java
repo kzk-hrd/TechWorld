@@ -44,15 +44,6 @@ public class SuperMonster extends Monster {
 			System.out.println(this.numOfPoisonAttack);
 			System.out.println();
 		}
-
-		if(numOfPoisonAttack > 0 && ma.getHp() <= 0) {
-			System.out.println("毒による追加攻撃");
-			System.out.println(h.getName() + "に" + super.getAt() + "のダメージを与えた！");
-			h.setHp(h.getHp() - super.getAt());
-			this.numOfPoisonAttack = this.numOfPoisonAttack - 1;
-			System.out.println(this.numOfPoisonAttack);
-			System.out.println();
-		}
 	}
 
 }

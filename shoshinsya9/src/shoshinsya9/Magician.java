@@ -10,6 +10,8 @@ public class Magician {
 	private int at;                   // 攻撃力
 	private int mp;                 // MP
 	private int df;                   // 防御力
+	private int calMp = 20;     // 魔法攻撃消費MP
+	private int magicAt = 20; //  魔法攻撃力
 
 	// メソッド
 	public String getName() {
@@ -81,9 +83,7 @@ public class Magician {
 	}
 
 	public void magicAttack(List<Monster> monsterList) {
-		// MP消費変数
-		int calMp = 20;
-		int magicAt = 20;
+
 		System.out.println(this.name + "の魔法攻撃!");
 		System.out.println("MPを"+calMp +"消費する");
 
@@ -108,6 +108,18 @@ public class Magician {
 		System.out.println("hpが10回復し、" + this.hp + "になった");
 		System.out.println("mpが20回復し、" + this.mp + "になった");
 		System.out.println();
+	}
+	public int getCalMp() {
+		return calMp;
+	}
+	public void setCalMp(int calMp) {
+		this.calMp = calMp;
+	}
+	public int getMagicAt() {
+		return magicAt;
+	}
+	public void setMagicAt(int magicAt) {
+		this.magicAt = magicAt;
 	}
 
 }

@@ -147,7 +147,7 @@ public class Story10_3 {
 				} else if(!judgeMagicianDead) {
 					monsterAt.attackMagician(sma, sh);
 					if(sma.getHp() <= 0) {
-						System.out.println(sma.getHp() + "のHPが0になりました。");
+						System.out.println(sma.getName() + "のHPが0になりました。");
 						judgeMagicianDead = true;
 					}
 				}
