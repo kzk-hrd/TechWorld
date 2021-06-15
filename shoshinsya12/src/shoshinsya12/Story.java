@@ -6,14 +6,9 @@ import java.util.Scanner;
 
 public class Story {
 
-	//public static boolean judgeHeroDead = false;
-	//public static boolean judgeMagicianDead = false;
-	//public static boolean judgeMonster1Dead = false;
-	//public static boolean judgeMonster2Dead = false;
 	public static int  count = 1;
 	public static Charactor sh = null;
 	public static Charactor sma = null;
-
 
 	public static void main(String[] args) {
 
@@ -126,27 +121,56 @@ public class Story {
 		creatureList.add(sm1);
 		creatureList.add(sm2);
 
+		// 生死判定変数
+		boolean charactorResult = false;
+		boolean creatureResult = false;
+
+
 		// ストーリー
-		// battleメソッドは、battleの最後HP判定して終了判定をbooleanで返して、trueの間loopにするとかのほうがコードがスマートになりそう。
-		while((sh.getHp() > 0 || sma.getHp() > 0) && (sm1.getHp() > 0 || sm2.getHp() > 0)) {
+		while(!charactorResult && !creatureResult) {
 			System.out.println("========" + count + "ターン目==========");
+
+			// バトルメソッド
 			battle(charactorList, creatureList, count);
 
+			// HP表示
 			System.out.println();
 			System.out.println(sh.getName() + "の残りHP" + sh.getHp());
 			System.out.println(sm1.getName() + "の残りHP" + sm1.getHp());
 			System.out.println(sm2.getName() + "の残りHP" + sm2.getHp());
 			System.out.println(sma.getName() + "の残りHP" + sma.getHp());
 
+			// 生死判定
+			charactorResult = judgeCharactorDead(charactorResult, sh, sma);
+			creatureResult = judgeCreatureDead(creatureResult, sm1, sm2);
+			System.out.println(charactorResult);
+			System.out.println(creatureResult);
+
 			count++;
 		}
 
 		// 勝敗判定
-		if(sh.getHp() <= 0 && sma.getHp() <= 0) {
+		if(charactorResult) {
 			System.out.println(sm1.getName() + ", " + sm2.getName() + "の勝利です");
 		} else {
 			System.out.println(sh.getName() + ", " + sma.getName() + "の勝利です");
 		}
+	}
+
+	// 生死判定メソッド（Charactor）
+	public static boolean judgeCharactorDead(boolean judgeCharactorDead, Charactor sh, Charactor sma) {
+		if(sh.getHp() <= 0 && sma.getHp() <= 0) {
+			judgeCharactorDead = true;
+		}
+		return judgeCharactorDead;
+	}
+
+	// 生死判定メソッド（Creature）
+	public static boolean judgeCreatureDead(boolean judgeCreatureDead, Creature sm1, Creature sm2) {
+		if(sm1.getHp() <= 0 && sm2.getHp() <= 0) {
+			judgeCreatureDead = true;
+		}
+		return judgeCreatureDead;
 	}
 
 	// バトルメソッド
@@ -157,7 +181,6 @@ public class Story {
 			sh = charactorList.get(0);
 			sma = charactorList.get(1);
 		}
-
 
 		// SuperHeroの攻撃
 		if(sh.getHp() > 0) {
